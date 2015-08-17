@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>removeNestedAttrs() test</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qunit/1.18.0/qunit.min.css">
+</head>
+<body>
+
+	<div id="qunit"></div>
+
+	<div id="qunit-fixture">
+		<div id="content" style="border: 1px solid red;">
+			<figure style="border: 1px solid #111; margin: 1em; padding: 2px; border-radius: 2px;">
+				<img src="http://placehold.it/350x150" alt="" width="350" height="150">
+				<figcaption>Placeholder image</figcaption>
+			</figure>
+		</div>
+	</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+<script src="removeNestedAttrs.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qunit/1.18.0/qunit.min.js"></script>
+
+<script>
+
+QUnit.test( 'removeNestedAttrs()', 8, function( assert ) {
+	assert.ok( document.querySelector( '#content' ).hasAttribute( 'style' ), '#content has STYLE' );
+	assert.ok( document.querySelector( '#content figure' ).hasAttribute( 'style' ), 'FIGURE has STYLE' );
+	assert.ok( document.querySelector( '#content img' ).hasAttribute( 'width' ), 'IMG has WIDTH' );
+	assert.ok( document.querySelector( '#content img' ).hasAttribute( 'height' ), 'IMG has HEIGHT' );
+
+	removeNestedAttrs( '#content', [ 'style', 'width', 'height' ]);
+
+	assert.ok( document.querySelector( '#content' ).hasAttribute( 'style' ), '#content still has STYLE' );
+	assert.notOk( document.querySelector( '#content figure' ).hasAttribute( 'style' ), 'FIGURE no longer has STYLE' );
+	assert.notOk( document.querySelector( '#content img' ).hasAttribute( 'width' ), 'IMG no longer has WIDTH' );
+	assert.notOk( document.querySelector( '#content img' ).hasAttribute( 'height' ), 'IMG no longer has HEIGHT' );
+});
+
+</script>
+</body>
+</html>
